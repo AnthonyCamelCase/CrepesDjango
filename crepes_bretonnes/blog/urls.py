@@ -9,5 +9,6 @@ urlpatterns = [
     path('addition/<int:nombre1>/<int:nombre2>/', views.addition),
     path('accueil', views.accueil, name="accueil"),
     path('article/<int:id>-<slug:slug>', views.lire, name='lire'),
+    path('contact/', views.contact, name='contact'),
 ]
 

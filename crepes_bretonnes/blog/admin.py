@@ -6,11 +6,25 @@ from .models import Article, Categorie
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ("titre",'categorie','auteur', 'date', 'apercu_contenu')
     list_filter = ('auteur', 'categorie')
+    prepopulated_fields = {'slug': ('titre',), }
     date_hierarchy = 'date'
     ordering = ('date',)
     search_fields = ('titre', 'contenu')
-    fields = ('titre', 'auteur', 'categorie', 'contenu')
+    #Configuration du formulaire d'édition
+    fieldsets = (
+        # Fieldset 1 : meta-info (titre, auteur…)
+        ('Général', {
+            'classes': ['collapse', ],
+            'fields': ('titre','slug', 'auteur', 'categorie')
+        }),
+        # Fieldset 2 : contenu de l'article
+        ('Contenu de l\'article', {
+            'description': 'Le formulaire accepte les balises HTML. Utilisez-les à bon escient !',
+            'fields': ('contenu',)
+        }),
+    )
 
+    #Colonnes personnalisées
     def apercu_contenu(self, article):
         """
         Retourne les 40 premiers caractères du contenu de l'article,
