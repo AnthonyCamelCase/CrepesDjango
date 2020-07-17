@@ -33,9 +33,9 @@ def addition(request, nombre1, nombre2):
 
 def accueil(request):
     """ Afficher tous les articles de notre blog """
-    articles = Article.objects.all() # Nous sélectionnons tous nos articles
+    articles = Article.objects.order_by("-date")[:3] # Nous sélectionnons tous nos articles
     return render(request, 'blog/accueil.html', {'derniers_articles': articles})
 
-def lire(request, id):
+def lire(request, id, slug):
     article = get_object_or_404(Article, id=id, slug=slug)
     return render(request, 'blog/lire.html', {'article':article})
