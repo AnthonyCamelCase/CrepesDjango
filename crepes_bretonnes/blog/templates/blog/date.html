@@ -2,6 +2,8 @@
 
 
 {% block content %}
+{% load static %}
+<img src="{% static 'blog/crepe.jpg' %}" alt="Mon image" />
     <h2>Bienvenue !</h2>
     <h1>Bienvenue sur mon blog</h1>
     <p>La date actuelle est : {{ date }}</p>
