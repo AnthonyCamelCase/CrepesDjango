@@ -1,8 +1,8 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from datetime import datetime
-from blog.models import Article
-from .forms import ArticleForm
+from blog.models import Article, Contact
+from .forms import ArticleForm, NouveauContactForm
 
 def home(request):
     """ Exemple de page non valide au niveau HTML pour que l'exemple soit concis """
@@ -41,17 +41,18 @@ def lire(request, id, slug):
     article = get_object_or_404(Article, id=id, slug=slug)
     return render(request, 'blog/lire.html', {'article':article})
 
-def contact(request):
-    # Construire le formulaire, soit avec les données postées,
-    # soit vide si l'utilisateur accède pour la première fois
-    # à la page.
-    form = ArticleForm(request.POST or None)
-    # Nous vérifions que les données envoyées sont valides
-    # Cette méthode renvoie False s'il n'y a pas de données
-    # dans le formulaire ou qu'il contient des erreurs.
+
+def nouveau_contact(request):
+    contactList = Contact.objects.order_by("nom")
+    sauvegarde = False
+    form = NouveauContactForm(request.POST or None, request.FILES)
     if form.is_valid():
         form.save()
+        form = NouveauContactForm()
+        sauvegarde = True
+
+    context = {'form': form, 'sauvegarde': sauvegarde, "contactList" : contactList }
+    return render(request, 'blog/contact.html', context)
 
 
-    # Quoiqu'il arrive, on affiche la page du formulaire.
-    return render(request, 'blog/contact.html', locals())
+

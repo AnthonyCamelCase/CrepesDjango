@@ -25,3 +25,10 @@ class Article(models.Model):
     def __str__(self):
         return self.titre
 
+class Contact(models.Model):
+    nom = models.CharField(max_length=255)
+    adresse = models.TextField()
+    photo = models.ImageField(upload_to="photos/")
+
+    def __str__(self):
+        return self.nom
