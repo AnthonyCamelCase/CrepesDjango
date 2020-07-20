@@ -6,7 +6,6 @@ from .models import Article, Categorie
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ("titre",'categorie','auteur', 'date', 'apercu_contenu')
     list_filter = ('auteur', 'categorie')
-    prepopulated_fields = {'slug': ('titre',), }
     date_hierarchy = 'date'
     ordering = ('date',)
     search_fields = ('titre', 'contenu')

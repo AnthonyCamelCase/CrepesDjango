@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+from autoslug import AutoSlugField
+
 
 class Categorie(models.Model):
     nom = models.CharField(max_length=30)
@@ -10,7 +12,7 @@ class Categorie(models.Model):
 
 class Article(models.Model):
     titre = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=100, blank = True, null=True)
+    slug = AutoSlugField(populate_from='title')
     auteur = models.CharField(max_length=42)
     contenu = models.TextField(null=True)
     date = models.DateTimeField(default=timezone.now,
